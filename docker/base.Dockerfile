@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN go build -o server ./cmd/api/main.go
+RUN go build -o server ./cmd/app/main.go
 RUN ls -l /app/server
 
 FROM alpine:latest
