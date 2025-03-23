@@ -20,8 +20,8 @@ func (r *Router) RegisterRoutes(srv *fiber.App) {
 	api := srv.Group("/api")
 
 	{
-		api.Get("/users", r.baseHandler.GetUser)
-		api.Get("/users/:user_id", r.baseHandler.GetUser)
+		api.Get("/users", r.baseHandler.GetUsers)
+		api.Get("/users/:user_id", r.baseHandler.GetUsers)
 		api.Post("/users", r.baseHandler.CreateUser)
 		api.Put("/users", r.baseHandler.UpdateUser)
 		api.Delete("users/:user_id", r.baseHandler.DeleteUser)

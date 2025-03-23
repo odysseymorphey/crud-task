@@ -1,15 +1,18 @@
 package repository
 
 import (
-	"github.com/gofiber/fiber/v3"
+	"context"
+	"github.com/odysseymorphey/crud-task/internal/models"
 	"github.com/odysseymorphey/crud-task/internal/storage"
 )
 
 type Repository interface {
-	GetUser(fiber.Ctx) error
-	CreateUser(fiber.Ctx) error
-	DeleteUser(fiber.Ctx) error
-	UpdateUser(fiber.Ctx) error
+	GetUser(user_id string, ctx context.Context) (*models.User, error)
+	GetUsers(ctx context.Context) ([]models.User, error)
+	CreateUser(user *models.User, ctx context.Context) error
+	DeleteUser(user_id string, ctx context.Context) error
+	UpdateUser(user models.User, ctx context.Context) error
+	Close() error
 }
 
 type repository struct {
@@ -20,18 +23,26 @@ func NewRepository(storage *storage.PostgresDB) Repository {
 	return &repository{storage: storage}
 }
 
-func (r *repository) GetUser(ctx fiber.Ctx) error {
-	return nil
+func (r *repository) GetUser(user_id string, ctx context.Context) (*models.User, error) {
+	return r.storage.GetUser(user_id, ctx)
 }
 
-func (r *repository) CreateUser(ctx fiber.Ctx) error {
-	return nil
+func (r *repository) GetUsers(ctx context.Context) ([]models.User, error) {
+	return r.storage.GetUsers(ctx)
 }
 
-func (r *repository) DeleteUser(ctx fiber.Ctx) error {
-	return nil
+func (r *repository) CreateUser(user *models.User, ctx context.Context) error {
+	return r.storage.CreateUser(user, ctx)
 }
 
-func (r *repository) UpdateUser(ctx fiber.Ctx) error {
-	return nil
+func (r *repository) DeleteUser(user_id string, ctx context.Context) error {
+	return r.storage.DeleteUser(user_id, ctx)
+}
+
+func (r *repository) UpdateUser(user models.User, ctx context.Context) error {
+	return r.storage.UpdateUser(user, ctx)
+}
+
+func (r *repository) Close() error {
+	return r.storage.Close()
 }

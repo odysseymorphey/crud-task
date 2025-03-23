@@ -3,6 +3,7 @@ package server
 import (
 	"log"
 	"os"
+	"os/signal"
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/odysseymorphey/crud-task/internal/repository"
@@ -38,4 +39,22 @@ func NewServer() *Server {
 		router: r,
 		repo:   repo,
 	}
+}
+
+func (s *Server) Run() {
+	log.Fatal(s.server.Listen(":8382"))
+
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, os.Interrupt)
+	go func() {
+		<-sig
+
+		s.Shutdown()
+		os.Exit(0)
+	}()
+}
+
+func (s *Server) Shutdown() {
+	log.Fatal(s.repo.Close())
+	log.Fatal(s.server.Shutdown())
 }
