@@ -1,0 +1,30 @@
+### Получить список всех пользователей
+GET http://localhost:8283/api/users
+Content-Type: application/json
+
+### Получить запись конкретного пользователя по ID
+GET http://localhost:8283/api/users/1
+Content-Type: application/json
+
+### Добавить пользователя
+POST http://localhost:8283/api/users
+Content-Type: application/json
+
+{
+  "name": "zalim",
+  "second_name": "ramazanov"
+}
+
+### Изменить запись о пользователе
+PUT http://localhost:8283/api/users
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "sportzal",
+  "secon_name": "guseinov"
+}
+
+### Удалить пользователя по ID
+DELETE http://localhost:8283/api/users/1
+Content-Type: application/json
